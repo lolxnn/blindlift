@@ -19,7 +19,7 @@ void loop(){
     if (driver.recv(buf, &buflen)) 
     {
       int i;  
-      if((char*)buf == "HOME"){
+      if((char*)buf == "GOHOME"){
           digitalWrite(HOME, HIGH);
           delay(500);
           digitalWrite(HOME, LOW);
