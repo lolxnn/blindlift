@@ -37,12 +37,52 @@ void setup() {
   for(i = 15; i < 21; i++){
     pinMode(i, INPUT);
   }
+  doorMan(3, 1);
+  doorMan(2, 1);
+  doorMan(1, 1);
   do{
     digitalWrite(MOTP_GIU, HIGH);
     if(digitalRead(SENS_1)) currentFloor = 1;
   }while(currentFloor != 1);
   digitalWrite(MOTP_GIU, LOW);
+  doorMan(currentFloor, 0);
   Serial.begin(9600);
+}
+
+void checkLeds(){
+  if(currentFloor == 1){
+    digitalWrite(LEDPOS_3, LOW);
+    digitalWrite(LEDPOS_2, LOW);
+    digitalWrite(LEDPOS_1, HIGH);
+    digitalWrite(LEDV_3, LOW);
+    digitalWrite(LEDR_3, HIGH);
+    digitalWrite(LEDV_2, LOW);
+    digitalWrite(LEDR_2, HIGH);
+    digitalWrite(LEDV_1, HIGH);
+    digitalWrite(LEDR_1, LOW);
+  }
+  if(currentFloor == 2){
+    digitalWrite(LEDPOS_3, LOW);
+    digitalWrite(LEDPOS_2, HIGH);
+    digitalWrite(LEDPOS_1, LOW);
+    digitalWrite(LEDV_3, LOW);
+    digitalWrite(LEDR_3, HIGH);
+    digitalWrite(LEDV_2, HIGH);
+    digitalWrite(LEDR_2, LOW);
+    digitalWrite(LEDV_1, LOW);
+    digitalWrite(LEDR_1, HIGH);
+  }
+  if(currentFloor == 3){
+    digitalWrite(LEDPOS_3, HIGH);
+    digitalWrite(LEDPOS_2, LOW);
+    digitalWrite(LEDPOS_1, LOW);
+    digitalWrite(LEDV_3, HIGH);
+    digitalWrite(LEDR_3, LOW);
+    digitalWrite(LEDV_2, LOW);
+    digitalWrite(LEDR_2, HIGH);
+    digitalWrite(LEDV_1, LOW);
+    digitalWrite(LEDR_1, HIGH);
+  }
 }
 
 void doorMan(int porta, bool chiudere){
@@ -125,5 +165,6 @@ void loop() {
   if(digitalRead(digitalRead(PULC_1) || digitalRead(PULA_1) && currentFloor != 1)) gotoFloor(1);
   if(digitalRead(digitalRead(PULC_2) || digitalRead(PULA_2) && currentFloor != 2)) gotoFloor(2);
   if(digitalRead(digitalRead(PULC_3) || digitalRead(PULA_3) && currentFloor != 3)) gotoFloor(3);
-  
+  checkLeds();
+  delay(1);
 }
